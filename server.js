@@ -168,7 +168,4 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Make sure OPENAI_API_KEY is set in your .env file`);
-});
+module.exports = app;
