@@ -2,13 +2,12 @@
   "name": "indian-stock-prediction",
   "version": "1.0.0",
   "description": "Indian stock market trend analysis with AI",
-  "main": "server.js",
+  "main": "api/index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node api/index.js",
     "dev": "nodemon server.js"
   },
   "keywords": ["stock", "prediction", "indian-stocks", "ai"],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
@@ -21,3 +20,4 @@
     "nodemon": "^3.0.1"
   }
 }
+
