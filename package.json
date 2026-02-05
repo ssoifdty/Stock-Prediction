@@ -7,17 +7,21 @@
     "start": "node api/index.js",
     "dev": "nodemon server.js"
   },
-  "keywords": ["stock", "prediction", "indian-stocks", "ai"],
+  "keywords": [
+    "stock",
+    "prediction",
+    "indian-stocks",
+    "ai"
+  ],
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2",
     "axios": "^1.6.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "openai": "^4.20.0",
-    "cors": "^2.8.5"
+    "express": "^4.18.2",
+    "openai": "^6.18.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
   }
 }
-
