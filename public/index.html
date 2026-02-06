@@ -1,85 +1,142 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Stock Trend Analyzer</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>AI Stock Trend Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    body{
-      font-family: Arial;
-      background:#f5f6fa;
-      text-align:center;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f7fb;
     }
-    .container{
-      width:800px;
-      margin:auto;
-      margin-top:40px;
+
+    /* NAVBAR */
+    .navbar {
+      background: #0f172a;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    input,button{
-      padding:10px;
-      font-size:16px;
+
+    .navbar a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
     }
-    .card{
-      background:white;
-      padding:20px;
-      margin-top:20px;
-      border-radius:10px;
-      box-shadow:0 2px 10px rgba(0,0,0,0.1);
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 60px;
+      background: linear-gradient(120deg,#2563eb,#06b6d4);
+      color: white;
+    }
+
+    /* SECTION */
+    .section {
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
-
-<h1>Indian Stock AI Trend Analyzer</h1>
-
-<input id="symbol" placeholder="Enter stock (RELIANCE)" />
-<button onclick="analyze()">Analyze</button>
-
-<div id="analysis" class="card" style="display:none"></div>
-
-<canvas id="chart" class="card"></canvas>
-
+<!-- NAVBAR -->
+<div class="navbar">
+  <h2>Stock AI Agent</h2>
+  <div>
+    <a href="#analyze">Analyze</a>
+    <a href="#help">Help</a>
+    <a href="#contact">Contact</a>
+  </div>
 </div>
 
+<!-- HERO -->
+<div class="hero">
+  <h1>AI Indian Stock Trend Predictor</h1>
+  <p>Predict bullish, bearish or sideways trends using AI analysis</p>
+</div>
+
+<!-- ANALYZE -->
+<div id="analyze" class="section">
+  <h2>Analyze Stock</h2>
+  <input id="symbol" placeholder="Enter stock (RELIANCE)">
+  <button onclick="analyze()">Analyze</button>
+
+  <div id="result" class="card"></div>
+</div>
+
+<!-- HELP -->
+<div id="help" class="section">
+  <h2>Help</h2>
+  <div class="card">
+    Enter any NSE stock symbol like RELIANCE, TCS, INFY.
+    The AI analyzes the last 30 days data and predicts the trend.
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="section">
+  <h2>Contact Us</h2>
+  <div class="card">
+    Email: choprasugam.88@gmail.com <br>
+    GitHub: https://github.com/SugamChopra
+  </div>
+</div>
+
+<footer>
+  © 2026 AI Stock Predictor
+</footer>
+
 <script>
-let chart;
+async function analyze() {
+  const symbol = document.getElementById('symbol').value;
 
-async function analyze(){
-  const symbol = document.getElementById("symbol").value;
-
-  const res = await fetch("/api/analyze",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json"},
-    body: JSON.stringify({symbol})
+  const res = await fetch('/api/analyze', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ symbol })
   });
 
-  const result = await res.json();
-
-  // Show analysis
-  document.getElementById("analysis").style.display="block";
-  document.getElementById("analysis").innerHTML =
-    `<h2>Trend: ${result.analysis.trend || result.analysis}</h2>
-     <p>${result.analysis.explanation || ""}</p>`;
-
-  // Chart
-  const labels = result.data.map(d=>d.date);
-  const prices = result.data.map(d=>d.close);
-
-  if(chart) chart.destroy();
-
-  chart = new Chart(document.getElementById("chart"),{
-    type:'line',
-    data:{
-      labels:labels,
-      datasets:[{
-        label:"Price",
-        data:prices,
-        fill:false
-      }]
-    }
-  });
+  const data = await res.json();
+  document.getElementById('result').innerHTML =
+    "<h3>Result</h3><pre>" + JSON.stringify(data, null, 2) + "</pre>";
 }
 </script>
 
